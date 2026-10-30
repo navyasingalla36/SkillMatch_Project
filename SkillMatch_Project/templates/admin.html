@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Admin{% endblock %}
+{% block content %}
+<div class="page-heading">
+    <span class="eyebrow">ADMIN</span>
+    <h1>Manage job listings</h1>
+</div>
+<div class="admin-layout">
+    <div class="panel">
+        <h2>Add a job</h2>
+        <form class="form" method="post" style="margin-top:0">
+            <label>Job title<input type="text" name="title" required></label>
+            <label>Company<input type="text" name="company" required></label>
+            <label>Location<input type="text" name="location" required></label>
+            <label>Required skills<input type="text" name="skills" placeholder="Python, Flask, SQL" required><small>Separate with commas</small></label>
+            <label>Description<textarea name="description" rows="4" required></textarea></label>
+            <button class="btn primary" type="submit">Add job</button>
+        </form>
+    </div>
+    <div class="panel">
+        <h2>Current listings ({{ jobs|length }})</h2>
+        <div class="admin-jobs">
+            {% for j in jobs %}
+            <div class="admin-job">
+                <div><strong>{{ j['title'] }}</strong><small>{{ j['company'] }} · {{ j['location'] }}</small></div>
+                <form method="post" action="{{ url_for('delete_job', job_id=j['id']) }}" data-confirm="Delete this job?"><button class="delete-btn" type="submit">Delete</button></form>
+            </div>
+            {% else %}<p class="muted">No jobs yet.</p>{% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

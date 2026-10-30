@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Applications{% endblock %}
+{% block content %}
+<div class="page-heading">
+    <span class="eyebrow">APPLICATION TRACKER</span>
+    <h1>My applications</h1>
+    <p>Applications recorded inside SkillMatch (not sent to external employers).</p>
+</div>
+{% if apps %}
+<div class="panel table-wrap">
+    <table>
+        <thead><tr><th>Job</th><th>Company</th><th>Location</th><th>Applied on</th><th>Status</th></tr></thead>
+        <tbody>
+        {% for a in apps %}
+            <tr><td><a href="{{ url_for('job_details', job_id=a['job_id']) }}">{{ a['title'] }}</a></td><td>{{ a['company'] }}</td><td>{{ a['location'] }}</td><td>{{ a['applied_on'] }}</td><td><span class="status">{{ a['status'] }}</span></td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="empty-state"><h3>No applications yet</h3><p>Find a job that matches your skills and apply.</p><a class="btn primary" href="{{ url_for('jobs') }}">Browse jobs</a></div>
+{% endif %}
+{% endblock %}

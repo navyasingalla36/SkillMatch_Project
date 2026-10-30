@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}{{ job['title'] }}{% endblock %}
+{% block content %}
+<a class="back-link" href="{{ url_for('jobs') }}">← Back to jobs</a>
+<div class="detail-layout">
+    <div class="panel detail-main">
+        <span class="eyebrow">JOB DETAILS</span>
+        <h1>{{ job['title'] }}</h1>
+        <p class="company large">{{ job['company'] }}</p>
+        <div class="detail-meta"><span>{{ job['location'] }}</span><span>Posted {{ job['posted_on'] }}</span></div>
+        <h3>Description</h3>
+        <p>{{ job['description'] }}</p>
+        <h3>Required skills</h3>
+        <div class="tags">{% for s in job['skills'].split(',') %}<span class="muted-tag">{{ s.strip() }}</span>{% endfor %}</div>
+        {% if show_scores %}
+            <h3>Skill gap analysis</h3>
+            <div class="analysis-row"><span>Skills you have</span><strong>{{ r.matched|length }} of {{ r.matched|length + r.missing|length }}</strong></div>
+            <div class="tags">{% for s in r.matched %}<span class="good-tag">{{ s }}</span>{% else %}<span class="muted-tag">None yet</span>{% endfor %}</div>
+            <div class="analysis-row"><span>Skills to learn</span><strong class="missing-text">{{ r.missing|length }}</strong></div>
+            <div class="tags">{% for s in r.missing %}<span class="missing-tag">{{ s }}</span>{% else %}<span class="good-tag">You have every required skill!</span>{% endfor %}</div>
+        {% elif g.user %}
+            <p><a href="{{ url_for('profile') }}">Add your skills</a> to see your skill gap for this job.</p>
+        {% endif %}
+    </div>
+    <div class="panel apply-panel">
+        {% if show_scores %}
+            <div class="score-ring big">{{ r.score }}<span>%</span></div>
+            <h3>Match score</h3>
+            <p class="muted">75% skill coverage + 25% text similarity</p>
+        {% else %}
+            <h3>Interested?</h3>
+            <p class="muted">Log in and add skills to see how well you match.</p>
+        {% endif %}
+        {% if not g.user %}
+            <a class="btn primary full" href="{{ url_for('login') }}">Log in to apply</a>
+        {% elif applied %}
+            <button class="btn secondary full" disabled>Applied ✓</button>
+        {% else %}
+            <form method="post" action="{{ url_for('apply', job_id=job['id']) }}"><button class="btn primary full" type="submit">Apply now</button></form>
+        {% endif %}
+        <small>Applications are saved inside SkillMatch only. They are not sent to the employer.</small>
+    </div>
+</div>
+{% endblock %}

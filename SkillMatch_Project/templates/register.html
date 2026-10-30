@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<div class="auth-wrap"><div class="auth-card">
+    <span class="eyebrow">CREATE ACCOUNT</span>
+    <h1>Join SkillMatch</h1>
+    <p class="muted">Create an account to get personalised job recommendations.</p>
+    <form class="form" method="post">
+        <label>Full name<input type="text" name="name" required></label>
+        <label>Email<input type="email" name="email" required></label>
+        <label>Password<input type="password" name="password" minlength="6" required><small>At least 6 characters</small></label>
+        <button class="btn primary full" type="submit">Create account</button>
+    </form>
+    <p class="form-bottom">Already registered? <a href="{{ url_for('login') }}">Log in</a></p>
+</div></div>
+{% endblock %}

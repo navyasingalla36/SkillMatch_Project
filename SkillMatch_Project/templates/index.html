@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="hero-copy">
+        <span class="eyebrow">SKILL-BASED JOB MATCHING</span>
+        <h1>Find jobs that fit your skills, and learn what's <span>missing</span></h1>
+        <p>Enter your technical skills and SkillMatch ranks job listings by match score, then shows exactly which skills you still need to learn.</p>
+        <div class="hero-actions">
+            {% if g.user %}
+                <a class="btn primary" href="{{ url_for('dashboard') }}">Open dashboard</a>
+            {% else %}
+                <a class="btn primary" href="{{ url_for('register') }}">Create free account</a>
+                <a class="btn secondary" href="{{ url_for('jobs') }}">Browse jobs</a>
+            {% endif %}
+        </div>
+        <div class="trust-row"><span>✓ TF-IDF + cosine similarity</span><span>✓ Skill gap analysis</span><span>✓ Application tracking</span></div>
+    </div>
+    <div class="hero-visual">
+        <div class="visual-top"><span class="dot"></span><span class="dot yellow"></span><span class="dot green"></span><span class="visual-label">SAMPLE MATCH</span></div>
+        <div class="match-card">
+            <div class="match-head">
+                <div><small>RECOMMENDED</small><h3>Python Developer</h3><p>DataBridge Labs · Remote</p></div>
+                <div class="score-ring">86<span>%</span></div>
+            </div>
+            <div class="progress"><i style="width:86%"></i></div>
+            <div class="tags"><span class="good-tag">Python</span><span class="good-tag">Flask</span><span class="good-tag">SQL</span></div>
+            <div class="tags"><span class="missing-tag">REST API</span><span class="missing-tag">Git</span></div>
+        </div>
+        <div class="mini-stat"><b>Illustrative example</b><p>Scores are calculated from your own profile skills.</p></div>
+    </div>
+</section>
+<section class="feature-grid">
+    <div class="feature"><div class="feature-icon">◎</div><h3>Smart recommendations</h3><p>Jobs are ranked by a hybrid score: 75% exact skill coverage and 25% TF-IDF text similarity.</p></div>
+    <div class="feature"><div class="feature-icon">↗</div><h3>Skill gap analysis</h3><p>See matched and missing skills for every job so you know what to learn next.</p></div>
+    <div class="feature"><div class="feature-icon">✓</div><h3>Track applications</h3><p>Apply inside the platform and keep every application record in one place.</p></div>
+</section>
+{% endblock %}

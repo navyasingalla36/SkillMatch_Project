@@ -1,0 +1,19 @@
+{% set j = r.job %}
+<div class="job-card">
+    <div class="job-card-top">
+        <div class="company-avatar">{{ j['company'][0]|upper }}</div>
+        {% if show_scores %}<span class="match-pill">{{ r.score }}% match</span>{% endif %}
+    </div>
+    <h3>{{ j['title'] }}</h3>
+    <p class="company">{{ j['company'] }} · {{ j['location'] }}</p>
+    <p class="description">{{ j['description']|truncate(110) }}</p>
+    <div class="tags">
+        {% if show_scores %}
+            {% for s in r.matched[:4] %}<span class="good-tag">{{ s }}</span>{% endfor %}
+            {% for s in r.missing[:3] %}<span class="missing-tag">{{ s }}</span>{% endfor %}
+        {% else %}
+            {% for s in j['skills'].split(',')[:5] %}<span>{{ s.strip() }}</span>{% endfor %}
+        {% endif %}
+    </div>
+    <div class="job-card-bottom"><span>Posted {{ j['posted_on'] }}</span><a href="{{ url_for('job_details', job_id=j['id']) }}">View details →</a></div>
+</div>

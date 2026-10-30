@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+<div class="page-heading">
+    <span class="eyebrow">YOUR PROFILE</span>
+    <h1>Skills &amp; education</h1>
+    <p>Recommendations are calculated from the skills you list here.</p>
+</div>
+<div class="panel form-panel">
+    <form class="form" method="post" style="margin-top:0">
+        <label>Full name<input type="text" name="name" value="{{ g.user['name'] }}" required></label>
+        <label>Email<input type="email" value="{{ g.user['email'] }}" disabled></label>
+        <label>Educational qualification <span class="optional">(optional)</span><input type="text" name="education" value="{{ g.user['education'] }}" placeholder="B.Tech CSE, 3rd year"></label>
+        <label>Technical skills<textarea name="skills" rows="3" placeholder="Python, Flask, SQL, HTML, CSS">{{ g.user['skills'] }}</textarea><small>Separate skills with commas</small></label>
+        <label>About you <span class="optional">(optional)</span><textarea name="bio" rows="3">{{ g.user['bio'] }}</textarea></label>
+        <button class="btn primary" type="submit">Save profile</button>
+    </form>
+</div>
+{% endblock %}

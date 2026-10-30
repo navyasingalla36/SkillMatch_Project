@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="page-heading">
+    <span class="eyebrow">DASHBOARD</span>
+    <h1>Hello, {{ g.user['name'].split()[0] }}</h1>
+    <p>Your personalised job recommendations and activity at a glance.</p>
+</div>
+<div class="stats-grid">
+    <div class="stat-card"><span>Skills in profile</span><strong>{{ skill_count }}</strong><small>Update them in your profile</small></div>
+    <div class="stat-card"><span>Applications</span><strong>{{ app_count }}</strong><small>Recorded in SkillMatch</small></div>
+    <div class="stat-card"><span>Best match</span><strong>{{ best }}%</strong><small>Out of {{ job_count }} listed jobs</small></div>
+</div>
+{% if not show_scores %}
+<div class="empty-state">
+    <h3>Add your skills to get recommendations</h3>
+    <p>Tell us what you know, for example Python, Flask, SQL.</p>
+    <a class="btn primary" href="{{ url_for('profile') }}">Update profile</a>
+</div>
+{% else %}
+<div class="section-heading">
+    <div><h2>Top recommendations</h2><p>Ranked by your hybrid match score</p></div>
+    <a href="{{ url_for('jobs') }}">See all jobs →</a>
+</div>
+<div class="job-grid">{% for r in results %}{% include "_job_card.html" %}{% endfor %}</div>
+{% endif %}
+{% endblock %}
